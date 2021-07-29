@@ -60,7 +60,9 @@ class NotesController extends Controller
      */
     public function show($id)
     {
-        //
+        $note = Note::find($id);
+
+        return view('notes.show')->with('note', $note);
     }
 
     /**
@@ -71,7 +73,13 @@ class NotesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $note = Note::find($id);
+
+        if (auth()->user()->id !== $note->user_id) {
+            return redirect('/notes')->with('error', 'Unauthorised page.');
+        }
+
+        return view('notes.edit')->with('note', $note);
     }
 
     /**
@@ -83,7 +91,19 @@ class NotesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+        $note = Note::find($id);
+
+        $note->title = $request->input('title');
+        $note->body = $request->input('body');
+
+        $note->save();
+
+        return redirect('/notes')->with('success', 'Note updated');
     }
 
     /**

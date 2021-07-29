@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Create post</h1>
+    <h1>Create note</h1>
 
     {!! Form::open(['action' => 'App\Http\Controllers\NotesController@store', 'method' => 'POST']) !!}
 
