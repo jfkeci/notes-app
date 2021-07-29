@@ -144,6 +144,7 @@ class NotesController extends Controller
 
         $note->title = $request->input('title');
         $note->body = $request->input('body');
+        $note->body = $request->input('category');
 
         $note->save();
 
