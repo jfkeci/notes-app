@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,13 +14,24 @@ class NotesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($category_id = 0)
     {
         /* $notes = Note::all(); */
         $user_id = auth()->user()->id;
-        $notes = DB::select('SELECT * FROM notes WHERE user_id = ' . $user_id . ' ORDER BY created_at ASC');
 
-        return view('notes.index')->with('notes', $notes);
+        if (empty($category_id)) {
+            $notes = DB::select('SELECT * FROM notes WHERE user_id = ' . $user_id . ' ORDER BY created_at ASC');
+        } else {
+            $notes = DB::select('SELECT * FROM notes WHERE category_id = ' . $category_id . ' AND user_id = ' . $user_id . ' ORDER BY created_at ASC');
+        }
+
+        $categories = Category::all();
+
+        $data = array(
+            'notes' => $notes,
+            'categories' => $categories
+        );
+        return view('notes.index')->with($data);
     }
 
     /**
@@ -29,7 +41,11 @@ class NotesController extends Controller
      */
     public function create()
     {
-        return view('notes.create');
+        /* $categories = DB::select('SELECT category FROM categories'); */
+        $categories = Category::all();
+        /* $categories = Category::pluck('category', 'id'); */
+
+        return view('notes.create')->with('categories', $categories);
     }
 
     /**
@@ -48,6 +64,7 @@ class NotesController extends Controller
         $note = new Note;
         $note->title = $request->input('title');
         $note->body = $request->input('body');
+        $note->category_id = $request->input('category');
         $note->user_id = auth()->user()->id;
 
         $note->save();
@@ -66,6 +83,18 @@ class NotesController extends Controller
         $note = Note::find($id);
 
         return view('notes.show')->with('note', $note);
+    }
+
+    public function category($category_id)
+    {
+        $notes = DB::select('SELECT * FROM notes WHERE category_id = ' . $category_id . ' ORDER BY created_at ASC');
+        $categories = Category::all();
+
+        $data = array(
+            'notes' => $notes,
+            'categories' => $categories
+        );
+        return view('notes.by_category')->with($data);
     }
 
     /**
