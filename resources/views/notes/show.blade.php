@@ -16,7 +16,7 @@
     @if (!Auth::guest())
         @if (Auth::user()->id == $note->user_id)
             <a href="/notes/{{ $note->id }}/edit" class="btn btn-default"> Edit </a>
-            {!! Form::open(['action' => ['App\Http\Controllers\NotesController@destroy', $note->id], 'method' => 'NOTE', 'class' => 'pull-right']) !!}
+            {!! Form::open(['action' => ['App\Http\Controllers\NotesController@destroy', $note->id], 'method' => 'POST', 'class' => 'pull-right']) !!}
             {{ Form::hidden('_method', 'DELETE') }}
             {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
             {!! Form::close() !!}
