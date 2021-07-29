@@ -9,7 +9,8 @@
     <div class="col-md-12">
         <h1>{{ $note->title }}</h1>
         <p>{{ $note->body }}</p>
-        <hr>
+        <small>Category: <a href="/categories/{{ $note->category_id }}"> {{ $category }}</a></small>
+        <br>
         <small>Written on: {{ $note->created_at }}</small>
     </div>
     <hr>

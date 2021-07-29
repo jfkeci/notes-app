@@ -9,7 +9,7 @@
     <div class="col-md-12">
         <h1>{{ $category->category }}</h1>
         <hr>
-        <small>Written on: {{ $category->created_at }}</small>
+        <small>Created: {{ $category->created_at }}</small>
     </div>
     <hr>
 

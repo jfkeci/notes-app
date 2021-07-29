@@ -81,8 +81,14 @@ class NotesController extends Controller
     public function show($id)
     {
         $note = Note::find($id);
+        $category = Category::find($note->category_id)->category;
 
-        return view('notes.show')->with('note', $note);
+        $data = array(
+            'note' => $note,
+            'category' => $category
+        );
+
+        return view('notes.show')->with($data);
     }
 
     public function category($category_id)
@@ -106,12 +112,18 @@ class NotesController extends Controller
     public function edit($id)
     {
         $note = Note::find($id);
+        $categories = Category::all();
 
         if (auth()->user()->id !== $note->user_id) {
             return redirect('/notes')->with('error', 'Unauthorised page.');
         }
 
-        return view('notes.edit')->with('note', $note);
+        $data = array(
+            'note' => $note,
+            'categories' => $categories
+        );
+
+        return view('notes.edit')->with($data);
     }
 
     /**

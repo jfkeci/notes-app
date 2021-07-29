@@ -6,6 +6,17 @@
     {!! Form::open(['action' => ['App\Http\Controllers\NotesController@update', $note->id], 'method' => 'POST']) !!}
 
     <div class="form-group">
+        <select name="category" id="" class="form-select form-select-lg mb-3">
+            @foreach ($categories as $category)
+                @if ($category->id === $note->category_id)
+                    <option selected value="{{ $category->id }}">{{ $category->category }}</option>
+                @else
+                    <option value="{{ $category->id }}">{{ $category->category }}</option>
+                @endif
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group">
         {{ Form::label('title', 'Title') }}
         {{ Form::text('title', $note->title, ['class' => 'form-control', 'placeholder' => 'Title']) }}
     </div>
