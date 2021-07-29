@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', 'App\Http\Controllers\PagesController@index');
+Route::get('/about', 'App\Http\Controllers\PagesController@about');
+Route::get('/contact', 'App\Http\Controllers\PagesController@contact');
 
 Auth::routes();
 
