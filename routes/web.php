@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotesController;
 use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,8 @@ Route::get('/contact', 'App\Http\Controllers\PagesController@contact');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('notes', 'App\Http\Controllers\NotesController');
 
 Auth::routes();
 
