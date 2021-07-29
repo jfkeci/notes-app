@@ -3,7 +3,7 @@
 @section('content')
     <h1>Edit category</h1>
 
-    {!! Form::open(['action' => ['App\Http\Controllers\CategoriesController@update', $categroy->id], 'method' => 'POST']) !!}
+    {!! Form::open(['action' => ['App\Http\Controllers\CategoriesController@update', $category->id], 'method' => 'POST']) !!}
 
     <div class="form-group">
         {{ Form::label('category', 'Category') }}
