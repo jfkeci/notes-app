@@ -11,4 +11,9 @@ class Note extends Model
     {
         return $this->belongsTo('User');
     }
+
+    public function category()
+    {
+        return $this->belongsTo('Category');
+    }
 }

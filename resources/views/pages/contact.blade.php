@@ -13,6 +13,6 @@
             <label for="contactBody" class="form-label">Message</label>
             <textarea type="text" class="form-control" id="contactBody"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Send</button>
     </form>
 @endsection

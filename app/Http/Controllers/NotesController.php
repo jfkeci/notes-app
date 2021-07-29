@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NotesController extends Controller
 {
@@ -14,7 +15,9 @@ class NotesController extends Controller
      */
     public function index()
     {
-        $notes = Note::all();
+        /* $notes = Note::all(); */
+        $user_id = auth()->user()->id;
+        $notes = DB::select('SELECT * FROM notes WHERE user_id = ' . $user_id . ' ORDER BY created_at ASC');
 
         return view('notes.index')->with('notes', $notes);
     }
