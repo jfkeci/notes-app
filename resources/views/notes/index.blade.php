@@ -3,6 +3,20 @@
 @section('content')
     <h1>Notes</h1>
 
+    <br>
+    {!! Form::open(['action' => ['App\Http\Controllers\NotesController@index', $category_id], 'method' => 'POST']) !!}
+    <div class="form-group">
+        <select name="category" id="" class="form-select form-select-lg mb-3">
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->category }}</option>
+            @endforeach
+        </select>
+    </div>
+    {{ Form::hidden('_method', 'PUT') }}
+
+    {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+
+    {!! Form::close() !!}
     @if (count($notes) > 0)
         <div class="card">
             <ul class="list-group list-group-flash">

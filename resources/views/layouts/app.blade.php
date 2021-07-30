@@ -40,19 +40,23 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/notes/create">New note</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/categories/create">New category</a>
-                        </li>
+                        @if (!Auth::guest())
+                            <li class="nav-item">
+                                <a class="nav-link" href="/categories/create">New category</a>
+                            </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/notes">Notes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/categories">Categories</a>
-                        </li>
+                        @if (!Auth::guest())
+                            <li class="nav-item">
+                                <a class="nav-link" href="/notes">Notes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/categories">Categories</a>
+                            </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="/about">About</a>
                         </li>
@@ -82,7 +86,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                                document.getElementById('logout-form').submit();">
+                                                                                                                document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

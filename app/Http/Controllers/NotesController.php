@@ -9,6 +9,17 @@ use Illuminate\Support\Facades\DB;
 
 class NotesController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -89,18 +100,6 @@ class NotesController extends Controller
         );
 
         return view('notes.show')->with($data);
-    }
-
-    public function category($category_id)
-    {
-        $notes = DB::select('SELECT * FROM notes WHERE category_id = ' . $category_id . ' ORDER BY created_at ASC');
-        $categories = Category::all();
-
-        $data = array(
-            'notes' => $notes,
-            'categories' => $categories
-        );
-        return view('notes.by_category')->with($data);
     }
 
     /**
