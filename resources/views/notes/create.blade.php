@@ -6,7 +6,7 @@
     {!! Form::open(['action' => 'App\Http\Controllers\NotesController@store', 'method' => 'POST']) !!}
 
     <div class="form-group">
-        <select name="category" id="" class="form-select form-select-lg mb-3">
+        <select name="category" id="category" class="form-select form-select-lg mb-3">
             @foreach ($categories as $category)
                 <option value="{{ $category->id }}">{{ $category->category }}</option>
             @endforeach

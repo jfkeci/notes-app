@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $notes = DB::select('SELECT * FROM notes WHERE user_id = ' . Auth()->user()->id);
+        $user_id = Auth()->user()->id;
+        $user = User::find($user_id);
+        $notes = $user->notes;
         return view('home')->with('notes', $notes);
     }
 }

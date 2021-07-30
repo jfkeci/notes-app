@@ -9,6 +9,11 @@ class Category extends Model
 {
     public function notes()
     {
-        return $this->hasMany('Note');
+        return $this->hasMany('App\Models\Note');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
     }
 }

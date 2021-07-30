@@ -6,7 +6,7 @@
     {!! Form::open(['action' => ['App\Http\Controllers\NotesController@update', $note->id], 'method' => 'POST']) !!}
 
     <div class="form-group">
-        <select name="category" id="" class="form-select form-select-lg mb-3">
+        <select name="category" id="category" class="form-select form-select-lg mb-3">
             @foreach ($categories as $category)
                 @if ($category->id === $note->category_id)
                     <option selected value="{{ $category->id }}">{{ $category->category }}</option>

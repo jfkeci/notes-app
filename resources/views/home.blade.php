@@ -27,7 +27,7 @@
                                 </tr>
                                 @foreach ($notes as $note)
                                     <tr>
-                                        <th>{{ $note->title }}</th>
+                                        <th><a href="/notes/{{ $note->id }}">{{ $note->title }}</a></th>
                                         <th><a href="/notes/{{ $note->id }}/edit" class="btn btn-default">Edit</a></th>
                                         <th>
                                             {!! Form::open(['action' => ['App\Http\Controllers\NotesController@destroy', $note->id], 'method' => 'POST', 'class' => 'pull-right']) !!}

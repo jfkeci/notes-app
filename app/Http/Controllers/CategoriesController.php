@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoriesController extends Controller
 {
@@ -23,7 +25,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $user = User::find(auth()->user()->id);
+        $categories = $user->categories;
 
         return view('categories.index')->with('categories', $categories);
     }
@@ -53,6 +56,7 @@ class CategoriesController extends Controller
         $category = new Category;
 
         $category->category = $request->input('category');
+        $category->user_id = auth()->user()->id;
 
         $category->save();
 
@@ -68,8 +72,15 @@ class CategoriesController extends Controller
     public function show($id)
     {
         $category = Category::find($id);
+        /* $notes = $category->notes(); */
+        $notes = DB::select('SELECT * FROM notes WHERE category_id= ' . $category->id . ' AND user_id = ' . auth()->user()->id);
 
-        return view('categories.show')->with('category', $category);
+        $data = array(
+            'category' => $category,
+            'notes' => $notes
+        );
+
+        return view('categories.show')->with($data);
     }
 
     /**

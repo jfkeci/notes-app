@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class NotesController extends Controller
 {
@@ -23,26 +24,16 @@ class NotesController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  int  $category_id
      * @return \Illuminate\Http\Response
      */
     public function index($category_id = 0)
     {
         /* $notes = Note::all(); */
-        $user_id = auth()->user()->id;
+        $user = User::find(auth()->user()->id);
+        $notes = $user->notes;
 
-        if (empty($category_id)) {
-            $notes = DB::select('SELECT * FROM notes WHERE user_id = ' . $user_id . ' ORDER BY created_at ASC');
-        } else {
-            $notes = DB::select('SELECT * FROM notes WHERE category_id = ' . $category_id . ' AND user_id = ' . $user_id . ' ORDER BY created_at ASC');
-        }
-
-        $categories = Category::all();
-
-        $data = array(
-            'notes' => $notes,
-            'categories' => $categories
-        );
-        return view('notes.index')->with($data);
+        return view('notes.index')->with('notes', $notes);
     }
 
     /**
@@ -53,7 +44,8 @@ class NotesController extends Controller
     public function create()
     {
         /* $categories = DB::select('SELECT category FROM categories'); */
-        $categories = Category::all();
+        $user = User::find(auth()->user()->id);
+        $categories = $user->categories;
         /* $categories = Category::pluck('category', 'id'); */
 
         return view('notes.create')->with('categories', $categories);
@@ -111,7 +103,8 @@ class NotesController extends Controller
     public function edit($id)
     {
         $note = Note::find($id);
-        $categories = Category::all();
+        $user = User::find(auth()->user()->id);
+        $categories = $user->categories;
 
         if (auth()->user()->id !== $note->user_id) {
             return redirect('/notes')->with('error', 'Unauthorised page.');
@@ -143,7 +136,7 @@ class NotesController extends Controller
 
         $note->title = $request->input('title');
         $note->body = $request->input('body');
-        $note->body = $request->input('category');
+        $note->category_id = $request->input('category');
 
         $note->save();
 
